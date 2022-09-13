@@ -16,4 +16,6 @@ const db ={};
 db.Sequelize=Sequelize;
 db.sequelize=sequelize;
 db.dish=require("./dish")(sequelize, Sequelize);
+db.users=require("./users")(sequelize, Sequelize);
+db.dailymenu=require("./dailymenu")(sequelize, Sequelize);
 module.exports = db;

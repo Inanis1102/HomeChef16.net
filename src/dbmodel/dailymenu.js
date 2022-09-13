@@ -1,5 +1,7 @@
 module.exports = (sequelize, Sequelize)=>{
-    const dish = sequelize.define("dish", {
+    const dish = sequelize.define("dailymenu", { /* bla */ }, {
+        timestamps: false,
+        freezeTableName: true,
         username: {type: Sequelize.TEXT},
         dateofmenu: {type: Sequelize.DATE},
         breakfast:{type: Sequelize.TEXT},

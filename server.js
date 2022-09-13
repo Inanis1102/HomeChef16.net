@@ -1,33 +1,25 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const db = require('./src/dbconfig/dbconfigquery')
+const port = 3300
 
-var corsOptions = {
-  origin: "http://localhost:3300"
-};
-app.use(cors(corsOptions));
-// parse requests of content-type - application/json
-app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
+app.get('/', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
 
-const db = require("./src/dbmodel");
-db.sequelize.sync()
-.then(()=>
-{
-  console.log("Synced db.");
+app.get('/dish',db.getDish)
+app.post('/dish',db.createDish)
+app.put('/dish/:id',db.updateDish)
+app.delete('/users/:id',db.deleteDish)
+
 })
-.catch((err)=>{
-  console.log("Failed to sync db:" + err.message);
-});
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Connection succeed." });
-});
 
-require("./src/dbroutes/dishroutes")(app, {});
-// set port, listen for requests
-const PORT = process.env.PORT || 3300;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(port, () => {
+  console.log(`App running on port ${port}.`)
+})

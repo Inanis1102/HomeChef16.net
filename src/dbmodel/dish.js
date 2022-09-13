@@ -1,5 +1,7 @@
 module.exports = (sequelize, Sequelize)=>{
-    const dish = sequelize.define('dish', {
+    var dish = sequelize.define('dish',{ /* bla */ }, {
+        timestamps: false,
+        freezeTableName: true,
         id: {type: Sequelize.TEXT, primaryKey: true},
         dishname: {type: Sequelize.TEXT},
         keyword:{type: Sequelize.TEXT},
