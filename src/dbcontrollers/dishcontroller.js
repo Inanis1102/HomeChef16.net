@@ -1,4 +1,4 @@
-const db = require("../dbmodel");
+const db = require("../dbmodel/dish");
 const dish = db.dish;
 const Op = db.sequelize.Op;
 

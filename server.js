@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const db = require('./src/dbconfig/dbconfigquery')
+const db = require('./src/dbconfig/dishquery')
 const port = 3300
 
 app.use(bodyParser.json())
@@ -18,7 +18,7 @@ app.get('/', (request, response) => {
 app.get('/dish',db.getDish)
 app.post('/dish',db.createDish)
 app.put('/dish/:id',db.updateDish)
-app.delete('/users/:id',db.deleteDish)
+app.delete('/dish/:id',db.deleteDish)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
