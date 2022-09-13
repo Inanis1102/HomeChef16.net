@@ -13,12 +13,12 @@ app.use(
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 
+})
+
 app.get('/dish',db.getDish)
 app.post('/dish',db.createDish)
 app.put('/dish/:id',db.updateDish)
 app.delete('/users/:id',db.deleteDish)
-
-})
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

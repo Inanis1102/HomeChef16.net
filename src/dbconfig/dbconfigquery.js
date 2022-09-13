@@ -7,27 +7,27 @@ const pool = new Pool({
     port: 5432
 })
 
-const getDish = (request, response) => {
+const getDish = (req, res) => {
     pool.query('SELECT * FROM dish ORDER BY id ASC', (error, results) => {
       if (error) {
         throw error
       }
-      response.status(200).json(results.rows)
+      res.status(200).json(results.rows)
     })
   }
 
-const createDish = (req,res)=>{
-    var {id,dishname, keyword, type, ingredients, howtomade} = request.body
+const createDish = (request,res)=>{
+    var {dishname, keyword, type, ingredients, howtomade} = request.body
 
-    pool.query('INSERT INTO dish (id, dishname, keyword, type, ingredients, howtomade) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [id, dishname, keyword, type, ingredients, howtomade], (error,results) =>{
+    pool.query('INSERT INTO dish (dishname, keyword, type, ingredients, howtomade) VALUES ($1, $2, $3, $4, $5) RETURNING *', [dishname, keyword, type, ingredients, howtomade], (error,results) =>{
         if (error) {
             throw error
           }
-          response.status(201).send(`Dish added`)
+          res.status(201).send(`Dish added`)
     })
 }
 
-const updateDish = (req,res)=>{
+const updateDish = (request,res)=>{
     var id = parseInt(request.params.id)
     var {dishname, keyword, type, ingredients, howtomade} = request.body
 
@@ -35,7 +35,7 @@ const updateDish = (req,res)=>{
         if (error) {
             throw error
           }
-          response.status(201).send(`Dish updated`)
+          res.status(201).send(`Dish updated`)
         }
     )
 }

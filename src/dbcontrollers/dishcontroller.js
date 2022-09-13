@@ -9,7 +9,7 @@ exports.create = (req,res)=>{
         });
         return;
     }
-    const dish = {
+    const dishs = {
         id: req.body.id,
         dishname: req.body.dishname,
         keyword: req.body.keyword,
@@ -17,7 +17,7 @@ exports.create = (req,res)=>{
         ingredients: req.body.ingredients,
         howtomade: req.body.howtomade
     };
-    dish.create(dish)
+    dish.create(dishs)
     .then(data=> {
         res.send(data);
     })
