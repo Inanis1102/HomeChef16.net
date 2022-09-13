@@ -1,5 +1,5 @@
 const Pool = require('pg').Pool
-const pool = require("./dbconfigquery")
+const pool = require("./dbconfig")
 
 const getDish = (req, res) => {
   pool.query('SELECT * FROM dish ORDER BY id ASC', (error, results) => {
