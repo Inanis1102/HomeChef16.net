@@ -6,7 +6,17 @@ const getDish = (req, res) => {
     if (error) {
       throw error
     }
-    res.status(200).json(results.rows)
+    res.status(200).send(results.rows)
+  })
+}
+
+const getDishAt = (request,res)=>{
+  var keyword = request.body
+  pool.query('SELECT * FROM dish WHERE keyword LIKE $1', [keyword], (error,results)=>{
+    if (error){
+      throw error
+    }
+    res.status(200).send(results.rows)
   })
 }
 
@@ -45,5 +55,5 @@ const deleteDish = (request, response) => {
 }
 
 module.exports ={
-  getDish, createDish, updateDish, deleteDish
+  getDish, getDishAt, createDish, updateDish, deleteDish
 }
