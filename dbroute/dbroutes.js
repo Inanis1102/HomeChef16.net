@@ -1,10 +1,11 @@
 const { Router } = require("express")
 const router = Router();
-const dishcontroller = require('../controllers/dishcontroller')
-const usercontroller = require('../controllers/usercontroller')
-
+const dishcontroller = require('../dbcontrollers/dishcontroller')
+const usercontroller = require('../dbcontrollers/usercontroller')
+const menucontroller = require('../dbcontrollers/menucontroller')
 
 router.get("/dish", dishcontroller.getDish);
+router.get("/dish/keyword/:keyword", dishcontroller.getDishAt)
 router.post("/dish", dishcontroller.createDish);
 router.put("/dish/:id", dishcontroller.updateDish);
 router.delete('/dish/:id', dishcontroller.deleteDish);
@@ -12,5 +13,9 @@ router.get("/users", usercontroller.getUsers);
 router.post("/users", usercontroller.createUser);
 router.put("/users/:id", usercontroller.updateUser);
 router.delete('/users/:id', usercontroller.deleteUser);
+router.get("/menu", menucontroller.getMenu);
+router.post("/menu", menucontroller.createMenu);
+router.put("/menu/:id", menucontroller.updateMenu);
+router.delete("/menu/:id", menucontroller.deleteMenu);
 
 module.exports = router;

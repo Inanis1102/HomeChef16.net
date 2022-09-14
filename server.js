@@ -15,14 +15,6 @@ app.get('/', (request, response) => {
   response.json({info: 'Welcome to the rice fields'})
 })
 
-app.get('/users/:username', (req,res)=>{
-  pool.query('Select * from users where username=${req.params.username}', (err,result)=>{
-    if (!err){
-      res.send(result.rows);
-    }
-  });
-})
-
 app.use('/', routes);
 
 app.listen(port, () => {

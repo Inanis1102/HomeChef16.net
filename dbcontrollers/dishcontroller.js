@@ -1,9 +1,19 @@
 const pool = require("../dbconfig/dbconfig")
 const queries = require('../dbquery/dbquery')
 
-const getDish = async (req, res) => {
+const getDish = (request, res) => {
   pool.query(queries.getDish, (error, results) => {
     if (error) {
+      throw error
+    }
+    res.status(200).send(results.rows)
+  })
+}
+
+const getDishAt = (request,res)=>{
+  var {keyword} = request.params
+  pool.query(queries.getDishAt, [keyword], (error,results)=>{
+    if (error){
       throw error
     }
     res.status(200).send(results.rows)
@@ -45,5 +55,5 @@ const deleteDish = (request, response) => {
 }
 
 module.exports ={
-  getDish, createDish, updateDish, deleteDish
+  getDish, getDishAt, createDish, updateDish, deleteDish
 }
