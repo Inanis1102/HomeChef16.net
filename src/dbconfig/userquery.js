@@ -1,4 +1,3 @@
-const Pool = require('pg').Pool
 const pool = require("./dbconfig")
 
 const getUsers = (req,res) =>{
