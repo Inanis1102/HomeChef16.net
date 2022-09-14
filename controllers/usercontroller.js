@@ -1,7 +1,8 @@
-const pool = require("./dbconfig")
+const pool = require("../dbconfig/dbconfig")
+const queries = require("../dbquery/dbquery")
 
 const getUsers = (req,res) =>{
-    pool.query('SELECT * FROM users ORDER BY id ASC', (error,results)=>{
+    pool.query(queries.getUsers, (error,results)=>{
         if (error){
             throw error
         }
@@ -11,7 +12,7 @@ const getUsers = (req,res) =>{
 
 const createUser = (request,res)=>{
     var {useracc, password, username} = request.body
-    pool.query('INSERT INTO users (useracc, password, username) VALUES ($1, $2, $3) RETURNING *', [useracc, password, username], (error,results)=>{
+    pool.query(queries.createUser, [useracc, password, username], (error,results)=>{
         if (error){
             throw error
         }
@@ -22,7 +23,7 @@ const createUser = (request,res)=>{
 const updateUser = (request,res)=>{
     var id = parseInt(request.params.id)
     var {useracc, password, username} = request.body
-    pool.query('UPDATE users SET useracc = $1, password = $2, username = $3 WHERE "id" = $4',[password, username, useracc, id], (error,results)=>{
+    pool.query(queries.updateUser,[password, username, useracc, id], (error,results)=>{
         if (error){
             throw error
         }
@@ -32,7 +33,7 @@ const updateUser = (request,res)=>{
 
 const deleteUser = (request,response)=>{
     var id = parseInt(request.params.id)
-    pool.query('DELETE FROM users WHERE id = $1', [id], (error,results)=>{
+    pool.query(queries.deleteUser, [id], (error,results)=>{
         if (error){
             throw error
         }

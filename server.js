@@ -1,12 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const dishdb = require('./src/dbconfig/dishquery')
-const userdb = require('./src/dbconfig/userquery')
+const routes = require('./dbroute/dbroutes')
 const port = 3300
+const pool = require("./dbconfig/dbconfig")
 
 app.use(bodyParser.json())
-app.use(bodyParser.raw())
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -16,16 +15,15 @@ app.get('/', (request, response) => {
   response.json({info: 'Welcome to the rice fields'})
 })
 
-app.get('/dish/all',dishdb.getDish)
-app.get('/dish/key/',dishdb.getDishAt)
-app.post('/dish',dishdb.createDish)
-app.put('/dish/:id',dishdb.updateDish)
-app.delete('/dish/:id',dishdb.deleteDish)
-app.get('/users/all',userdb.getUsers)
-app.post('/users',userdb.createUser)
-app.put('/users/:id',userdb.updateUser)
-app.delete('/users/:id',userdb.deleteUser)
+app.get('/users/:username', (req,res)=>{
+  pool.query('Select * from users where username=${req.params.username}', (err,result)=>{
+    if (!err){
+      res.send(result.rows);
+    }
+  });
+})
 
+app.use('/', routes);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
