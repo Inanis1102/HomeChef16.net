@@ -23,8 +23,8 @@ app.put('/dish/:id',dishdb.updateDish)
 app.delete('/dish/:id',dishdb.deleteDish)
 app.get('/users/all',userdb.getUsers)
 app.post('/users',userdb.createUser)
-app.put('/users/:useracc',userdb.updateUser)
-app.delete('/users/:useracc',userdb.deleteUser)
+app.put('/users/:id',userdb.updateUser)
+app.delete('/users/:id',userdb.deleteUser)
 
 
 app.listen(port, () => {
