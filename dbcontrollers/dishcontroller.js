@@ -10,9 +10,9 @@ const getDish = (request, res) => {
   })
 }
 
-const getDishAt = (request,res)=>{
+const getDishAtKey = (request,res)=>{
   var {keyword} = request.params
-  pool.query(queries.getDishAt, [keyword], (error,results)=>{
+  pool.query(queries.getDishAtKey, [keyword], (error,results)=>{
     if (error){
       throw error
     }
@@ -55,5 +55,5 @@ const deleteDish = (request, response) => {
 }
 
 module.exports ={
-  getDish, getDishAt, createDish, updateDish, deleteDish
+  getDish, getDishAtKey, createDish, updateDish, deleteDish
 }

@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const routes = require('./dbroute/dbroutes')
+const dbroutes = require('./dbroute/dbroutes')
 const port = 3300
 const pool = require("./dbconfig/dbconfig")
 
@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
   response.json({info: 'Welcome to the rice fields'})
 })
 
-app.use('/', routes);
+app.use('/', dbroutes);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
