@@ -3,6 +3,7 @@
 
 const getDish = 'SELECT * FROM dish ORDER BY dishid ASC';
 const getDishAtKey = 'SELECT * FROM dish WHERE keyword = $1 ORDER BY dishid ASC'
+const getDishAtID = 'SELECT * FROM dish WHERE dishid = $1';
 const createDish = 'INSERT INTO dish (dishname, keyword, type, ingredients, howtomade) VALUES ($1, $2, $3, $4, $5)';
 const updateDish = 'UPDATE dish SET dishname = COALESCE(NULLIF($1,dishname), dishname), keyword = COALESCE(NULLIF($2,keyword), keyword), type= COALESCE(NULLIF($3,type), type), ingredients= COALESCE(NULLIF($4,ingredients),ingredients), howtomade=COALESCE(NULLIF($5,howtomade),howtomade) WHERE dishid = $6';
 const deleteDish = 'DELETE FROM dish WHERE dishid = $1';
@@ -22,5 +23,5 @@ const updateMenu = 'UPDATE dailymenu SET userid= COALESCE(NULLIF($1,userid),user
 const deleteMenu = 'DELETE FROM dailymenu WHERE menuid = $1';
 
 module.exports ={
-    getDish, getDishAtKey, createDish, updateDish, deleteDish, getUsers, createUser, updateUser, deleteUser, getMenu, createMenu, updateMenu, deleteMenu
+    getDish, getDishAtKey, getDishAtID, createDish, updateDish, deleteDish, getUsers, createUser, updateUser, deleteUser, getMenu, createMenu, updateMenu, deleteMenu
 }

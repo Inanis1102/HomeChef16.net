@@ -7,6 +7,7 @@ const menucontroller = require('../dbcontrollers/menucontroller')
 //routes for handling dish API
 
 router.get("/dish", dishcontroller.getDish);
+router.get("/dish/id/:id", dishcontroller.getDishAtID)
 router.get("/dish/keyword/:keyword", dishcontroller.getDishAtKey)
 router.post("/dish", dishcontroller.createDish);
 router.put("/dish/:id", dishcontroller.updateDish);
