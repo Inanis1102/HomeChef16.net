@@ -25,6 +25,9 @@ router.delete('/users/:id', usercontroller.deleteUser);
 router.get("/menu", menucontroller.getMenu);
 router.post("/menu", menucontroller.createMenu);
 router.put("/menu/:id", menucontroller.updateMenu);
+router.put("/menu/:id", menucontroller.updateBreakfast);
+router.put("/menu/:id", menucontroller.updateLunch);
+router.put("/menu/:id", menucontroller.updateDinner);
 router.delete("/menu/:id", menucontroller.deleteMenu);
 
 module.exports = router;

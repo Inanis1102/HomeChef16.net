@@ -20,8 +20,11 @@ const deleteUser = 'DELETE FROM users WHERE userid = $1';
 const getMenu = 'SELECT * FROM dailymenu ORDER BY menuid ASC';
 const createMenu = 'INSERT INTO dailymenu (userid, breakfast, lunch, dinner) VALUES ($1, $2, $3, $4)';
 const updateMenu = 'UPDATE dailymenu SET userid= COALESCE(NULLIF($1,userid),userid), breakfast = COALESCE(NULLIF($2,breakfast),breakfast), lunch= COALESCE(NULLIF($3,lunch),lunch), dinner=COALESCE(NULLIF($4,dinner),dinner) WHERE menuid=$5'
+const updateBreakfast = 'UPDATE dailymenu SET breakfast = $1 WHERE menuid = $2';
+const updateLunch = 'UPDATE dailymenu SET lunch=$1 WHERE menuid = $2';
+const updateDinner = 'UPDATE dailymenu SET dinner=$1 WHERE menuid = $2'
 const deleteMenu = 'DELETE FROM dailymenu WHERE menuid = $1';
 
 module.exports ={
-    getDish, getDishAtKey, getDishAtID, createDish, updateDish, deleteDish, getUsers, createUser, updateUser, deleteUser, getMenu, createMenu, updateMenu, deleteMenu
+    getDish, getDishAtKey, getDishAtID, createDish, updateDish, deleteDish, getUsers, createUser, updateUser, deleteUser, getMenu, createMenu, updateMenu, updateBreakfast, updateLunch, updateDinner, deleteMenu
 }

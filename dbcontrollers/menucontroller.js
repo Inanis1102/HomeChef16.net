@@ -32,6 +32,42 @@ const updateMenu = (request,res)=>{
     })
 }
 
+const updateBreakfast = (request,res)=>{
+    var id=parseInt(request.params.id)
+    var {breakfast} = request.body
+
+    pool.query(queries.updateBreakfast, [breakfast, id], (error,results)=>{
+        if (error){
+            throw error
+        }
+        res.status(201).send('Menu updated')
+    })
+}
+
+const updateLunch = (request,res)=>{
+    var id=parseInt(request.params.id)
+    var {lunch} = request.body
+
+    pool.query(queries.updateLunch, [lunch, id], (error,results)=>{
+        if (error){
+            throw error
+        }
+        res.status(201).send('Menu updated')
+    })
+}
+
+const updateDinner = (request,res)=>{
+    var id=parseInt(request.params.id)
+    var {dinner} = request.body
+
+    pool.query(queries.updateDinner, [breakfast, id], (error,results)=>{
+        if (error){
+            throw error
+        }
+        res.status(201).send('Menu updated')
+    })
+}
+
 const deleteMenu = (request,response)=>{
     var id = parseInt(request.params.id)
 
@@ -44,5 +80,5 @@ const deleteMenu = (request,response)=>{
 }
 
 module.exports ={
-    getMenu, createMenu, updateMenu, deleteMenu
+    getMenu, createMenu, updateMenu, updateBreakfast, updateLunch, updateDinner, deleteMenu
 }
