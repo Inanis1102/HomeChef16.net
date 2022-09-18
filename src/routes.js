@@ -6,6 +6,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import HealthyEating from "./pages/HealthyEating";
 import Detail from "./pages/Detail";
+import Login from "./pages/Login";
 
 export default function Router() {
   return useRoutes([
@@ -25,10 +26,16 @@ export default function Router() {
       path: "/healthy-eating",
       element: <HealthyEating />,
     },
+
+    {
+      path: "/detail/:id",
+      element: <Detail />,
+    },
     {
       path: "/detail",
       element: <Detail />,
     },
+    { path: "/login", element: <Login /> },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }

@@ -9,7 +9,6 @@ const Search = () => {
         <div className="grid list" id="bai-viet">
           <div className="main">
             <div className="search-box">
-              {" "}
               <input
                 className="search-box-input"
                 type="text"

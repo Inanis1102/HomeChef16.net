@@ -1,33 +1,40 @@
-const { Router } = require("express")
+const { Router } = require("express");
 const router = Router();
-const dishcontroller = require('../dbcontrollers/dishcontroller')
-const usercontroller = require('../dbcontrollers/usercontroller')
-const menucontroller = require('../dbcontrollers/menucontroller')
+const dishcontroller = require("../controllers/DistCtrl");
+const usercontroller = require("../controllers/UserCtrl");
+const menucontroller = require("../controllers/MenuCtrl");
+const cmtcontroller = require("../controllers/CommentCtrl")
 
 //routes for handling dish API
 
 router.get("/dish", dishcontroller.getDish);
-router.get("/dish/id/:id", dishcontroller.getDishAtID)
-router.get("/dish/keyword/:keyword", dishcontroller.getDishAtKey)
+router.get("/dish/:id", dishcontroller.getDishbyId);
+router.get("/dish/meal/:meal",dishcontroller.getDIshbyMeal)
+router.get("/dish/keyword/:keyword", dishcontroller.getDishAtKey);
 router.post("/dish", dishcontroller.createDish);
-router.put("/dish/:id", dishcontroller.updateDish);
-router.delete('/dish/:id', dishcontroller.deleteDish);
+router.put("/dish", dishcontroller.updateDish);
+router.delete("/dish", dishcontroller.deleteDish);
 
 //routes for handling user API
 
 router.get("/users", usercontroller.getUsers);
 router.post("/users", usercontroller.createUser);
-router.put("/users/:id", usercontroller.updateUser);
-router.delete('/users/:id', usercontroller.deleteUser);
+router.put("/users", usercontroller.updateUser);
+router.delete("/users", usercontroller.deleteUser);
+router.post("/login",usercontroller.login)
 
 //routes for handling menu API
 
 router.get("/menu", menucontroller.getMenu);
+router.get("/menu/:id", menucontroller.getMenubyId);
 router.post("/menu", menucontroller.createMenu);
-router.put("/menu/:id", menucontroller.updateMenu);
-router.put("/menu/:id", menucontroller.updateBreakfast);
-router.put("/menu/:id", menucontroller.updateLunch);
-router.put("/menu/:id", menucontroller.updateDinner);
-router.delete("/menu/:id", menucontroller.deleteMenu);
+router.put("/menu", menucontroller.updateMenu);
+router.delete("/menu", menucontroller.deleteMenu);
+
+//routes for handling menu API
+
+
+router.get("/cmt/:id", cmtcontroller.getCommentbyDishId);
+router.post("/cmt", cmtcontroller.writeComment);
 
 module.exports = router;

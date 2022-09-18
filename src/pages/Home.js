@@ -3,10 +3,56 @@ import Footer from "../component/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { useEffect } from "react";
+import { serverHost } from "../config/serverHost";
 const Home = () => {
   const navigate = useNavigate();
   const [isShow, setIsShow] = useState(false);
+  const [menu, setMenu] = useState([]);
+  const [loading, setLoading] = useState(false);
+  let [listData, setListData] = useState([]);
+  const handleChangeKeySearch = async (e) => {
+    let res = await axios.get(`${serverHost.host}/dish/keyword/${e}`);
+    if (res.status === 200) {
+      setListData(res.data);
+    }
+  };
+  const handleGetMenu = async () => {
+    const items = JSON.parse(localStorage.getItem("data"));
+    let res = await axios.get(`${serverHost.host}/menu`);
+    if (res.status === 200) {
+      console.log("response: ", res.data);
+      setMenu(res.data);
+    } else {
+      console.log("error response");
+    }
+  };
+
+  useEffect(() => {
+    handleGetMenu();
+  }, []);
+  let username;
+  const data = JSON.parse(localStorage.getItem("data"));
+  if (data) {
+    username = data.useracc;
+  }
+
+  console.log("menu:", menu);
+
+  let breakfast;
+  let lunch;
+  let dinner;
+  menu.map((me) => {
+    breakfast = me.breakfast;
+    lunch = me.lunch;
+    dinner = me.dinner;
+  });
+
+  console.log("break", breakfast);
+  // const breakfast = menu?.menu?.breakfast;
+  // const lunch = menu?.menu?.lunch;
+  // const dinner = menu?.menu?.dinner;
 
   const handleRedirect = () => {
     navigate("/detail", { replace: true });
@@ -23,47 +69,40 @@ const Home = () => {
             <div className="menu">
               <div className="item__menu">
                 <ul className="item__child">
-                  <li>Popular</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
+                  <li>Breakfast</li>
+                  {breakfast?.map((item) => {
+                    return (
+                      <li>
+                        <Link to={`/detail/${item._id}`}>{item.dishname}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="item__menu">
                 <ul className="item__child">
-                  <li>Right Now</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
+                  <li>Lunch</li>
+
+                  {lunch?.map((item) => {
+                    return (
+                      <li>
+                        <Link to={`/detail/${item._id}`}>{item.dishname}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="item__menu">
                 <ul className="item__child">
-                  <li>Ingredients</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
-                </ul>
-              </div>
-              <div className="item__menu">
-                <ul className="item__child">
-                  <li>Diet</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
-                </ul>
-              </div>
-              <div className="item__menu">
-                <ul className="item__child">
-                  <li>Meals</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
+                  <li>Dinner</li>
+
+                  {dinner?.map((item) => {
+                    return (
+                      <li>
+                        <Link to={`/detail/${item._id}`}>{item.dishname}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
@@ -91,9 +130,26 @@ const Home = () => {
               Tips &amp; Tricks
             </Link>
 
-            <Link className="login-a" to="/about">
-              About
-            </Link>
+            {!username && (
+              <Link className="login-a" to="/login">
+                Login
+              </Link>
+            )}
+            {username && (
+              <Link className="login-a" to="/#">
+                <p style={{ color: "red" }}> Welcome </p>
+                {username}
+              </Link>
+            )}
+            {username && (
+              <Link
+                className="login-ab"
+                onClick={()=>localStorage.clear()}
+                to="/login"
+              >
+                Logout
+              </Link>
+            )}
             <Link className="button-a" to="/contact">
               <div className="bg-div" />
               <div className="contact-us-div">Contact Us</div>
@@ -129,11 +185,23 @@ const Home = () => {
             <img className="vector-icon2" alt />
             <img className="subtract-icon" alt src="./img/subtract.svg" />
           </a>
-          <input
-            className="rectangle-input"
-            type="text"
-            placeholder="Search..."
-          />
+          <div className="search-container">
+            <input
+              className="rectangle-input"
+              type="text"
+              placeholder="Search..."
+              onChange={(e) => handleChangeKeySearch(e.target.value)}
+            />
+            {listData.length > 0 && (
+              <div className="dropdown">
+                {listData.map((list, index) => (
+                  <div key={index} className="dropdown-row">
+                    <Link to={`/detail/${list._id}`}>{list.dishname}</Link>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </header>
         <div className="cards-div" id="Sidebar">
           <div className="frame-div">

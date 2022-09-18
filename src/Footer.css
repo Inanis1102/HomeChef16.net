@@ -1,0 +1,188 @@
+body {
+    margin: 0;
+    line-height: normal;
+  }
+  .rectangle-footer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #484141;
+    width: 100%;
+    height: 717px;
+  }
+  .buzzfeed-inc-p {
+    margin: 0;
+    position: absolute;
+    top: 635px;
+    left: 70px;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    line-height: 22px;
+    display: inline-block;
+  }
+  .email-address-required,
+  .follow-us-p,
+  .get-the-homechef16net-newslet {
+    position: absolute;
+    left: 65px;
+    letter-spacing: 0.02em;
+    line-height: 22px;
+    display: inline-block;
+  }
+  .get-the-homechef16net-newslet {
+    top: 260px;
+    font-size: 36px;
+  }
+  .email-address-required,
+  .follow-us-p {
+    margin: 0;
+  }
+  .follow-us-p {
+    top: 472px;
+    font-size: 36px;
+    font-weight: 700;
+  }
+  .email-address-required {
+    top: 306px;
+  }
+  .rectangle-icon12,
+  .rectangle-icon13 {
+    position: absolute;
+    top: 345px;
+    left: 65px;
+    border-radius: 10px;
+    width: 418px;
+    height: 49px;
+  }
+  .rectangle-icon13 {
+    left: 501px;
+    width: 132px;
+  }
+  .sign-up-b,
+  .your-email-address {
+    position: absolute;
+    top: 359px;
+    left: 517px;
+    letter-spacing: 0.02em;
+    line-height: 22px;
+    display: inline-block;
+  }
+  .btn-sign-in{
+    background-color: #D76262;
+    padding: 12px;
+    transform: translateY(-13px);
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  .your-email-address {
+    border: 0;
+    background-color: transparent;
+    left: 83px;
+    font-size: 16px;
+    font-family: Montserrat;
+    color: #4f4444;
+    text-align: left;
+  }
+  .outlinebrandsfacebook-icon,
+  .outlinebrandsinstagram-icon {
+    position: absolute;
+    top: 518px;
+    left: 159px;
+    width: 72px;
+    height: 72px;
+  }
+  .outlinebrandsfacebook-icon {
+    top: 517px;
+    left: 248px;
+  }
+  .outlinebrandstumblr-icon,
+  .outlinebrandsyoutube-icon {
+    position: absolute;
+    top: 518px;
+    left: 337px;
+    width: 72px;
+    height: 72px;
+  }
+  .outlinebrandsyoutube-icon {
+    left: 65px;
+    width: 77px;
+    height: 77px;
+  }
+  .send-feedback-p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+  .accessibility-statement-p {
+    margin: 0;
+  }
+  .send-feedback-privacy-policy {
+    position: absolute;
+    top: 431px;
+    left: 1252px;
+    text-decoration: underline;
+    letter-spacing: 0.02em;
+    line-height: 22px;
+    font-weight: 700;
+    text-align: right;
+    display: inline-block;
+  }
+  .rectangle-a,
+  .rectangle-a1 {
+    text-decoration: none;
+    position: absolute;
+    top: 298px;
+    left: 1158px;
+    border-radius: 20px;
+    width: 196px;
+    height: 56px;
+    background-image: url(../public/img/rectangle-1840@3x.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+  }
+  .rectangle-a1 {
+    left: 1364px;
+    background-image: url(../public/img/rectangle-1841@3x.png);
+  }
+  .content-icon1 {
+    position: absolute;
+    top: 85px;
+    left: 346px;
+    width: 119px;
+    height: 76.1px;
+  }
+  .homechef16net-h1 {
+    margin: 0;
+    font-weight: 700;
+    position: absolute;
+    top: 161px;
+    left: 71px;
+    font-size: 60px;
+    letter-spacing: 0.02em;
+    line-height: 22px;
+    font-family: inherit;
+    color: #000;
+    display: flex;
+    align-items: center;
+    width: 757px;
+    height: 74px;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-text-stroke: 3px #fff;
+  }
+  .group-div1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 717px;
+  }
+  .group-footer {
+    position: relative;
+    width: 100%;
+    height: 717px;
+    text-align: left;
+    font-size: 24px;
+    color: #fff;
+    font-family: Montserrat;
+  }
+  

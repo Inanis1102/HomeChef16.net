@@ -2,15 +2,76 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import { serverHost } from "../config/serverHost";
 
 const Contact = () => {
   const [isShow, setIsShow] = useState(false);
+  const [menu, setMenu] = useState([]);
+  const handleGetMenu = async () => {
+    const items = JSON.parse(localStorage.getItem("data"));
+    let res = await axios.get(`${serverHost.host}/menu/${items._id}`);
+    if (res.status === 200) {
+      console.log("response: ", res.data);
+      setMenu(res.data);
+    } else {
+      console.log("error response");
+    }
+  };
 
+  useEffect(() => {
+    handleGetMenu();
+  }, []);
+  let username;
+  const data = JSON.parse(localStorage.getItem("data"));
+  if (data) {
+    username = data.useracc;
+  }
+
+  const breakfast = menu?.menu?.breakfast;
+  const lunch = menu?.menu?.lunch;
+  const dinner = menu?.menu?.dinner;
   return (
     <>
       <div className="smoothies-beverage-landing-p">
         <img className="vector-icon" alt="background" src="./img/vector.svg" />
         <img className="ellipse-icon" alt src="./img/ellipse-37.svg" />
+        {isShow && (
+          <>
+            <div className="menu-tran" onClick={() => setIsShow(false)}></div>
+            <div className="menu">
+              <div className="item__menu">
+                <ul className="item__child">
+                  <li>Breakfast</li>
+                  {breakfast?.ingredients.map((ingredient) => (
+                    <li>{ingredient}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="item__menu">
+                <ul className="item__child">
+                  <li>Lunch</li>
+                  <li>
+                    {lunch?.ingredients.map((ingredient) => (
+                      <li>{ingredient}</li>
+                    ))}
+                  </li>
+                </ul>
+              </div>
+              <div className="item__menu">
+                <ul className="item__child">
+                  <li>Dinner</li>
+                  <li>
+                    {dinner?.ingredients.map((ingredient) => (
+                      <li>{ingredient}</li>
+                    ))}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </>
+        )}
         <header className="hero-image-header" id="head-container">
           <img className="image-54-icon" alt="berry" src="./img/image-54.svg" />
           <img className="vector-icon1" alt src="./img/vector1.svg" />
@@ -31,9 +92,22 @@ const Contact = () => {
               Tips &amp; Tricks
             </Link>
 
-            <Link className="login-a" to="/about">
-              About
-            </Link>
+            {username ? (
+              <Link className="login-a">
+                {" "}
+                <p style={{ color: "red" }}> Welcome </p>
+                {username}
+              </Link>
+            ) : (
+              <Link className="login-a" to="/login">
+                Login
+              </Link>
+            )}
+            {username && (
+              <Link className="login-ab"  onClick={()=>localStorage.clear()}to="/login">
+                Logout
+              </Link>
+            )}
             <Link className="button-a" to="/contact">
               <div className="contact-us-div">Contact Us</div>
               <div className="selector-div" />
@@ -53,11 +127,6 @@ const Contact = () => {
             <img className="vector-icon2" alt />
             <img className="subtract-icon" alt src="./img/subtract.svg" />
           </a>
-          {/* <input
-            className="rectangle-input"
-            type="text"
-            placeholder="Search..."
-          /> */}
         </header>
         <div className="form-home">
           <div className="form-group-home">

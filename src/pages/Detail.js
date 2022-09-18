@@ -2,66 +2,139 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { serverHost } from "../config/serverHost";
+import { useParams } from "react-router-dom";
+import "../index.css";
+import "../Footer.css";
 
 const Detail = () => {
   const [isShow, setIsShow] = useState(false);
+  const [dish, setDish] = useState();
+  const [menu, setMenu] = useState();
+  const [content, setContent] = useState();
+  const [cmtList, setCmtList] = useState([]);
+  const [error, setError] = useState();
+  let { id } = useParams();
+
+  const handleGetDishDetail = async () => {
+    let res = await axios.get(`${serverHost.host}/dish/${id}`);
+    if (res.status === 200) {
+      setDish(res.data);
+    } else {
+      console.log("error response");
+    }
+  };
+
+  const handleGetComment = async () => {
+    let res = await axios.get(`${serverHost.host}/cmt/${id}`);
+    if (res.status === 200) {
+      setCmtList(res.data);
+      console.log("cmt list", res.data);
+    } else {
+      console.log("error response");
+    }
+  };
+
+  const handleGetMenu = async () => {
+    const items = JSON.parse(localStorage.getItem("data"));
+    let res = await axios.get(`${serverHost.host}/menu`);
+    if (res.status === 200) {
+      console.log("response: ", res.data);
+      setMenu(res.data);
+    } else {
+      console.log("error response");
+    }
+  };
+  let i = 1;
+  const handleSendCmt = async () => {
+    if (username) {
+      let res = await axios.post(`${serverHost.host}/cmt`, {
+        userId: data._id,
+        dishId: id,
+        content: content,
+      });
+      if (res.status === 200) {
+        handleGetComment();
+      } else {
+        console.log("error response");
+      }
+    }
+    setError("Please login first");
+  };
+
+  useEffect(() => {
+    handleGetDishDetail();
+    handleGetMenu();
+    handleGetComment();
+  }, [id, i]);
+  let breakfast;
+  let lunch;
+  let dinner;
+  menu?.map((me) => {
+    breakfast = me.breakfast;
+    lunch = me.lunch;
+    dinner = me.dinner;
+  });
+
+  let username;
+  const data = JSON.parse(localStorage.getItem("data"));
+  if (data) {
+    username = data.useracc;
+  }
+
   return (
     <>
       <div className="smoothies-beverage-landing-p">
-        <img className="vector-icon" alt="background" src="./img/vector.svg" />
-        <img className="ellipse-icon" alt src="./img/ellipse-37.svg" />
+        <img className="vector-icon" alt="background" src="../img/vector.svg" />
+        <img className="ellipse-icon" alt src="../img/ellipse-37.svg" />
         {isShow && (
           <>
             <div className="menu-tran" onClick={() => setIsShow(false)}></div>
             <div className="menu">
               <div className="item__menu">
                 <ul className="item__child">
-                  <li>Popular</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
+                  <li>Breakfast</li>
+                  {breakfast?.map((item) => {
+                    return (
+                      <li>
+                        <Link to={`/detail/${item._id}`}>{item.dishname}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="item__menu">
                 <ul className="item__child">
-                  <li>Right Now</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
+                  <li>Lunch</li>
+
+                  {lunch?.map((item) => {
+                    return (
+                      <li>
+                        <Link to={`/detail/${item._id}`}>{item.dishname}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="item__menu">
                 <ul className="item__child">
-                  <li>Ingredients</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
-                </ul>
-              </div>
-              <div className="item__menu">
-                <ul className="item__child">
-                  <li>Diet</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
-                </ul>
-              </div>
-              <div className="item__menu">
-                <ul className="item__child">
-                  <li>Meals</li>
-                  <li>Easy Dinner</li>
-                  <li>Work Lunches</li>
-                  <li>Easy Dinner</li>
-                  <li>Easy Dinner</li>
+                  <li>Dinner</li>
+
+                  {dinner?.map((item) => {
+                    return (
+                      <li>
+                        <Link to={`/detail/${item._id}`}>{item.dishname}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
           </>
         )}
+
         <header className="hero-image-header" id="head-container">
           <div className="div" id="bg-content">
             <span>0</span>
@@ -90,46 +163,51 @@ const Detail = () => {
               Tips &amp; Tricks
             </Link>
 
-            <Link className="login-a" to="/about">
-              About
-            </Link>
+            {username ? (
+              <Link className="login-a" to="#">
+                <p style={{ color: "red" }}> Welcome </p>
+                {username}
+              </Link>
+            ) : (
+              <Link className="login-a" to="/login">
+                Login
+              </Link>
+            )}
+            {username && (
+              <Link className="login-ab"   onClick={()=>localStorage.clear()} to="/login">
+                Logout
+              </Link>
+            )}
             <Link className="button-a" to="/contact">
               <div className="bg-div" />
               <div className="contact-us-div">Contact Us</div>
             </Link>
           </div>
-          <img className="content-icon" alt src="./img/content.svg" />
+          <img className="content-icon" alt src="../img/content.svg" />
           <p className="title-home-f">HOMECHEF16.NET</p>
-
-          {/* <input
-              className="rectangle-input"
-              type="text"
-              placeholder="Search..."
-            /> */}
         </header>
         <div className="form-home">
-          <div className="privacy-title">Veggie Garlic Noodles</div>
+          <div className="privacy-title"> {dish?.dishname}</div>
           <div className="list-icon">
-            <img className="v-icon " alt src="./img/vector2.svg" />
-            <img className="v-icon " alt src="./img/vector3.svg" />
-            <img className="v-icon" alt src="./img/subtract.svg" />
+            <img className="v-icon " alt src="../img/vector2.svg" />
+            <img className="v-icon " alt src="../img/vector3.svg" />
+            <img className="v-icon" alt src="../img/subtract.svg" />
           </div>
           <div className="list-how">
             <div className="list-left">
               <ul className="list-how-item">
                 <li>Ingredients</li>
-                <li>2 tablespoons vegetable oil(30ml)</li>
-                <li>5 cloves garlic, minced</li>
-                <li>4 spring onions, divided</li>
-                <li>2 carrot, cut into matchsticks</li>
-                <li>1 cup snap pea(100 g)</li>
+                {dish?.ingredients.map((ingredient) => (
+                  <li>{ingredient}</li>
+                ))}
               </ul>
             </div>
             <div className="list-right">
               <ul className="list-how-item">
                 <li>Preparation</li>
-                <li>2 tablespoons vegetable oil(30ml)</li>
-                <li>5 cloves garlic, minced</li>
+                {dish?.howtomade.map((made) => (
+                  <li>{made}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -140,37 +218,37 @@ const Detail = () => {
         <img
           className="rectangle-icon"
           alt
-          src="./img/rectangle-1842.svg"
+          src="../img/rectangle-1842.svg"
           id="rectangleImage"
         />
         <img
           className="rectangle-icon1"
           alt
-          src="./img/rectangle-1843.svg"
+          src="../img/rectangle-1843.svg"
           id="rectangleImage1"
         />
         <img
           className="rectangle-icon2"
           alt
-          src="./img/rectangle-1844.svg"
+          src="../img/rectangle-1844.svg"
           id="rectangleImage2"
         />
         <img
           className="rectangle-icon3"
           alt
-          src="./img/rectangle-1845.svg"
+          src="../img/rectangle-1845.svg"
           id="rectangleImage3"
         />
         <img
           className="rectangle-icon4"
           alt
-          src="./img/rectangle-1846.svg"
+          src="../img/rectangle-1846.svg"
           id="rectangleImage4"
         />
         <img
           className="rectangle-icon5"
           alt
-          src="./img/rectangle-1847.svg"
+          src="../img/rectangle-1847.svg"
           id="rectangleImage5"
         />
         <a className="italian-beef-rolls" href="#">
@@ -196,61 +274,32 @@ const Detail = () => {
         </b>
         <div className="comment">
           <h3 className="title-comment">Comments</h3>
-          <textarea className="comment-input"></textarea>
+          <textarea
+            className="comment-input"
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
+          <button onClick={handleSendCmt}>Send</button>
         </div>
         <div className="list-comment">
-          <div className="item-comment">
-            <img
-              src="./img/rectangle-1844.svg"
-              className="img-comment"
-              alt=""
-            />
-            <div className="text-comment">
-              <div className="name-par">Bellacordovi</div>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries,
-              </p>
-            </div>
-          </div>
-          <div className="item-comment">
-            <img
-              src="./img/rectangle-1844.svg"
-              className="img-comment"
-              alt=""
-            />
-            <div className="text-comment">
-              <div className="name-par">Bellacordovi</div>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries,
-              </p>
-            </div>
-          </div>
-          <div className="item-comment">
-            <img
-              src="./img/rectangle-1844.svg"
-              className="img-comment"
-              alt=""
-            />
-            <div className="text-comment">
-              <div className="name-par">Bellacordovi</div>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries,
-              </p>
-            </div>
-          </div>
-          <div className="btn-show-more font-17">Show more</div>
+          {cmtList ? (
+            cmtList.map((cmt, index) => (
+              <div className="item-comment">
+                <img
+                  src="../img/rectangle-1844.svg"
+                  className="img-comment"
+                  alt=""
+                />
+                <div className="text-comment">
+                  <div className="name-par">{cmt.userId.useracc}</div>
+                  <p>{cmt.content}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>No cmt</div>
+          )}
+          {error && <div style={{ color: "red" }}>{error}</div>}
+          {/* <div className="btn-show-more font-17">Show more</div> */}
         </div>
       </div>
       <Footer />

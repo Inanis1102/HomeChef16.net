@@ -84,7 +84,7 @@ const Header = () => {
               </svg>
             </button>
             <Link className="search-link" to="/tim-kiem">
-              {" "}
+     
               <svg
                 aria-hidden="true"
                 width={24}
